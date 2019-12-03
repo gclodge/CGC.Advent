@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CGC.Advent.Tests
 {
     [TestClass]
-    public class AdventTests
+    public class DayTwoTests
     {
         //< I'm lazy right now, get at me
         public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
