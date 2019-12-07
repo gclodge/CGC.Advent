@@ -44,7 +44,7 @@ namespace CGC.Advent.Tests
             {
                 //< Generate and run the Intcode
                 var intcode = new Core.Classes.Intcode(fn);
-                intcode.SetInput(1);
+                intcode.AddInput(1);
                 intcode.Process();
 
                 //< Need to validate that all outputs save the last were 0
@@ -70,7 +70,7 @@ namespace CGC.Advent.Tests
             foreach (var testTup in ComparisonTests)
             {
                 var intcode = new Core.Classes.Intcode(testTup.Item2);
-                intcode.SetInput(testTup.Item1);
+                intcode.AddInput(testTup.Item1);
                 intcode.Process();
 
                 Assert.IsTrue(intcode.Outputs.Single().Item2 == testTup.Item3);
@@ -86,7 +86,7 @@ namespace CGC.Advent.Tests
             {
                 //< Generate and run the Intcode
                 var intcode = new Core.Classes.Intcode(fn);
-                intcode.SetInput(5);
+                intcode.AddInput(5);
                 intcode.Process();
 
                 //< There should only be one output

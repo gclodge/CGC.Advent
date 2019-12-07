@@ -47,11 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Amplifier.cs" />
     <Compile Include="Classes\ElvenPassword.cs" />
     <Compile Include="Classes\Intcode.cs" />
     <Compile Include="Classes\ManhattanWire.cs" />
     <Compile Include="Classes\Opcode.cs" />
     <Compile Include="Classes\Orbit.cs" />
+    <Compile Include="Helpers\AmplifierHelper.cs" />
     <Compile Include="Helpers\FuelCalculator.cs" />
     <Compile Include="Helpers\LinearAlgebraHelper.cs" />
     <Compile Include="Helpers\ManhattanHelper.cs" />

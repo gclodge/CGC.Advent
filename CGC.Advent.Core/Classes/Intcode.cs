@@ -13,26 +13,47 @@ namespace CGC.Advent.Core.Classes
         public int Length => Source.Length;
 
         private int _Index = 0;
-        public int Input { get; private set; } = 1;
+        private int _CurrInput = 0;
+        public List<int> Inputs { get; private set; } = new List<int>();
 
         public List<Opcode> Opcodes { get; private set; } = new List<Opcode>();
         public List<Tuple<Opcode, int>> Outputs { get; private set; } = new List<Tuple<Opcode, int>>();
 
-        public Intcode(int[] source)
+        public bool WaitingForInput { get; private set; } = false;
+        public bool IsFinished { get; private set; } = false;
+
+        private bool WaitOnOutputs = false;
+
+        public Intcode(int[] source, bool waitOnOuputs = false)
         {
             this.Source = source;
+            this.WaitOnOutputs = waitOnOuputs;
         }
 
-        public Intcode(string fileName)
+        public Intcode(string source, bool waitOnOuputs = false)
         {
-            //< Parse all the input data into the Array
-            var data = File.ReadAllText(fileName);
+            string data = null;
+            if (source.EndsWith(".txt"))
+            {
+                //< Parse all the input data into the Array
+                data = File.ReadAllText(source);
+            }
+            else
+            {
+                //< Input data is already a string, just parse it
+                data = source;
+            }
             this.Source = data.Split(',').Select(d => int.Parse(d)).ToArray();
+            this.WaitOnOutputs = waitOnOuputs;
         }
 
-        public void SetInput(int inp)
+        public void AddInput(int inp)
         {
-            this.Input = inp;
+            this.Inputs.Add(inp);
+            if (this.WaitingForInput)
+            {
+                this.WaitingForInput = false;
+            }
         }
 
         public void Process()
@@ -45,17 +66,27 @@ namespace CGC.Advent.Core.Classes
                 int forward = 0;
 
                 if (opcode.Type == OpcodeType.Halt)
+                {
+                    this.IsFinished = true;
+                    _Index = 0;
                     return;
+                }
                 else
                 {
                     forward = HandleCode(opcode);
                 }
 
-                //< Hold onto the Opcode for debug
-                this.Opcodes.Add(opcode);
-
                 //< Iterate forward based on the Opcode's function
                 _Index += forward;
+
+                //< If we're marked as WaitingForInput, halt the process loop where it is (after adjusting the index)
+                if (this.WaitingForInput)
+                {
+                    break;
+                }
+
+                //< Hold onto the Opcode for debug
+                this.Opcodes.Add(opcode);
             }
         }
 
@@ -150,10 +181,24 @@ namespace CGC.Advent.Core.Classes
         private int HandleInputCode(Opcode op)
         {
             //< Querying for input from VB/Dialog/Console wasn't working, so being more lazy
+            if (_CurrInput < this.Inputs.Count)
+            {
+                //< Get the current input
+                var input = this.Inputs[_CurrInput];
+                _CurrInput += 1;
 
-            //< Set that input value to the specified position
-            this.SetValue((int)op.First.Value, this.Input);
-            return op.Length;
+                //< Set that input value to the specified position
+                this.SetValue((int)op.First.Value, input);
+                return op.Length;
+            }
+            else
+            {
+                //< We need to wait another Input, so we're gonna set 'WaitingForInput' and break the current process loop
+                this.WaitingForInput = true;
+                //< Returning zero since we want to re-use this input command at next Process()
+                return 0;
+            }
+                
         }
 
         private int HandleOutputCode(Opcode op)
@@ -163,6 +208,14 @@ namespace CGC.Advent.Core.Classes
 
             //< Get the actual output value, add to the 'outputs' listing
             this.Outputs.Add(Tuple.Create(op, (int)A));
+
+            //< Check if we're part of Amplifier in a feedback loop and thus gotta wait on Outputs
+            if (this.WaitOnOutputs)
+            {
+                this.WaitingForInput = true;
+            }
+
+            //< Return the length to offset - still want to start on the next command at next Process()
             return op.Length;
         }
 
