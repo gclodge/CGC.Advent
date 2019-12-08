@@ -37,6 +37,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,7 @@
     <Compile Include="Classes\ManhattanWire.cs" />
     <Compile Include="Classes\Opcode.cs" />
     <Compile Include="Classes\Orbit.cs" />
+    <Compile Include="Classes\SpaceImage.cs" />
     <Compile Include="Helpers\AmplifierHelper.cs" />
     <Compile Include="Helpers\FuelCalculator.cs" />
     <Compile Include="Helpers\LinearAlgebraHelper.cs" />
