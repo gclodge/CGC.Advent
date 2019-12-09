@@ -12,9 +12,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DaySevenTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         //< From: https://adventofcode.com/2019/day/7
         private static List<Tuple<int, int[], int[]>> TestTups = new List<Tuple<int, int[], int[]>>()
         {
@@ -26,8 +23,8 @@ namespace CGC.Advent.Tests
         //< From: https://adventofcode.com/2019/day/7#part2
         private static List<Tuple<int, int[], string>> FeedbackTups = new List<Tuple<int, int[], string>>()
         {
-            Tuple.Create(139629729, new int[] {9,8,7,6,5}, Path.Combine(TestDir, @"Day7.KnownFeedback.1.txt")),
-            Tuple.Create(18216, new int[] {9,7,8,5,6}, Path.Combine(TestDir, @"Day7.KnownFeedback.2.txt")),
+            Tuple.Create(139629729, new int[] {9,8,7,6,5}, Path.Combine(TestHelper.TestDir, @"Day7.KnownFeedback.1.txt")),
+            Tuple.Create(18216, new int[] {9,7,8,5,6}, Path.Combine(TestHelper.TestDir, @"Day7.KnownFeedback.2.txt")),
         };
 
         [TestMethod]
@@ -53,7 +50,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DaySeven_PartOne()
         {
-            var testFile = Path.Combine(TestDir, "Day7.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, "Day7.Input.txt");
             var maxResult = AmplifierHelper.GetMaximumThrustValue(testFile);
 
             Assert.IsTrue(maxResult == 366376);
@@ -62,7 +59,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DaySeven_PartTwo()
         {
-            var testFile = Path.Combine(TestDir, "Day7.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, "Day7.Input.txt");
             var maxResult = AmplifierHelper.GetMaximumFeedbackThrustValue(testFile);
 
             Assert.IsTrue(maxResult == 21596786);

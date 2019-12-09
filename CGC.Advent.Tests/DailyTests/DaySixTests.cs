@@ -10,14 +10,11 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DaySixTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         [TestMethod]
         public void Test_KnownOrbits()
         {
             //< From: https://adventofcode.com/2019/day/6
-            var testFile = Path.Combine(TestDir, @"Day6.KnownOrbits.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day6.KnownOrbits.txt");
 
             //< Parse the orbits
             var orbits = File.ReadLines(testFile).Select(x => new Core.Classes.Orbit(x)).ToList();
@@ -32,7 +29,7 @@ namespace CGC.Advent.Tests
         public void Test_DaySix_PartOne()
         {
             //< From: https://adventofcode.com/2019/day/6
-            var testFile = Path.Combine(TestDir, @"Day6.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day6.Input.txt");
 
             //< Parse the orbits
             var orbits = File.ReadLines(testFile).Select(x => new Core.Classes.Orbit(x)).ToList();
@@ -47,7 +44,7 @@ namespace CGC.Advent.Tests
         public void Test_KnownOrbitalTransfers()
         {
             //< From: https://adventofcode.com/2019/day/6
-            var testFile = Path.Combine(TestDir, @"Day6.KnownTransfers.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day6.KnownTransfers.txt");
 
             //< Parse the orbits
             var orbits = File.ReadLines(testFile).Select(x => new Core.Classes.Orbit(x)).ToList();
@@ -64,7 +61,7 @@ namespace CGC.Advent.Tests
         public void Test_DaySix_PartTwo()
         {
             //< From: https://adventofcode.com/2019/day/6
-            var testFile = Path.Combine(TestDir, @"Day6.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day6.Input.txt");
 
             //< Parse the orbits
             var orbits = File.ReadLines(testFile).Select(x => new Core.Classes.Orbit(x)).ToList();

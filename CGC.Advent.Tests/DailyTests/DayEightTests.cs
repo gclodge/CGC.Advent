@@ -11,9 +11,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayEightTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         //< From: https://adventofcode.com/2019/day/5#part2
         private static List<Tuple<string, int, int>> KnownImages = new List<Tuple<string, int, int>>()
         {
@@ -39,7 +36,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayEight_PartOne()
         {
-            var imageData = Path.Combine(TestDir, "Day8.Input.txt");
+            var imageData = Path.Combine(TestHelper.TestDir, "Day8.Input.txt");
             //< Parse the actual image data
             var img = new Core.Classes.SpaceImage(imageData, Width, Height);
             //< Get the layer with the fewest '0' digits
@@ -55,7 +52,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayEight_PartTwo()
         {
-            var imageData = Path.Combine(TestDir, "Day8.Input.txt");
+            var imageData = Path.Combine(TestHelper.TestDir, "Day8.Input.txt");
             //< Parse the actual image data
             var img = new Core.Classes.SpaceImage(imageData, Width, Height);
             //< Generate the final image

@@ -10,9 +10,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayFiveTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         //< From: https://adventofcode.com/2019/day/5#part2
         private static List<Tuple<int, long[], int>> ComparisonTests = new List<Tuple<int, long[], int>>()
         {
@@ -38,7 +35,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayFive_PartOne()
         {
-            var fn = Path.Combine(TestDir, "Day5.Input.txt");
+            var fn = Path.Combine(TestHelper.TestDir, "Day5.Input.txt");
 
             try
             {
@@ -80,7 +77,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayFive_PartTwo()
         {
-            var fn = Path.Combine(TestDir, "Day5.Input.txt");
+            var fn = Path.Combine(TestHelper.TestDir, "Day5.Input.txt");
 
             try
             {

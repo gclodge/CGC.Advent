@@ -54,16 +54,17 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DayEightTests.cs" />
-    <Compile Include="DayFiveTests.cs" />
-    <Compile Include="DayTwoTests.cs" />
+    <Compile Include="DailyTests\DayEightTests.cs" />
+    <Compile Include="DailyTests\DayFiveTests.cs" />
+    <Compile Include="DailyTests\DayTwoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DayThreeTests.cs" />
-    <Compile Include="DayFourTests.cs" />
-    <Compile Include="DayOneTests.cs" />
-    <Compile Include="DaySixTests.cs" />
-    <Compile Include="DaySevenTests.cs" />
-    <Compile Include="DayNineTests.cs" />
+    <Compile Include="DailyTests\DayThreeTests.cs" />
+    <Compile Include="DailyTests\DayFourTests.cs" />
+    <Compile Include="DailyTests\DayOneTests.cs" />
+    <Compile Include="DailyTests\DaySixTests.cs" />
+    <Compile Include="DailyTests\DaySevenTests.cs" />
+    <Compile Include="DailyTests\DayNineTests.cs" />
+    <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

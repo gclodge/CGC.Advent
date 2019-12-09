@@ -12,9 +12,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayOneTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         private static readonly List<Tuple<int, int>> TestTups = new List<Tuple<int, int>>()
         {
             Tuple.Create(12, 2),
@@ -55,7 +52,7 @@ namespace CGC.Advent.Tests
         public void Test_DayOne_PartOne()
         {
             //< Parse the test module masses into memory
-            var testFile = Path.Combine(TestDir, @"Day1.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day1.Input.txt");
             var masses = File.ReadLines(testFile).Where(line => line != "").Select(line => int.Parse(line));
             //< Calculate the fuel needs for each module
             var fuelNeeds = masses.Select(mass => FuelCalculator.CalculateFuelFromMass(mass));
@@ -69,7 +66,7 @@ namespace CGC.Advent.Tests
         public void Test_DayOne_PartTwo()
         {
             //< Parse the test module masses into memory
-            var testFile = Path.Combine(TestDir, @"Day1.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day1.Input.txt");
             var masses = File.ReadLines(testFile).Where(line => line != "").Select(line => int.Parse(line));
             //< Calculate the fuel needs for each module
             var fuelNeeds = masses.Select(mass => FuelCalculator.CalculateFuelForMassAndFuel(mass));

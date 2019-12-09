@@ -12,9 +12,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayThreeTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         //< From: https://adventofcode.com/2019/day/3
         private static List<Tuple<string, int, int>> TestTups = new List<Tuple<string, int, int>>()
         {
@@ -48,7 +45,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayThree_PartOne()
         {
-            var testFile = Path.Combine(TestDir, @"Day3.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day3.Input.txt");
 
             var minDist = ManhattanHelper.GetMinManhattanDistance(testFile);
 
@@ -58,7 +55,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayThree_PartTwo()
         {
-            var testFile = Path.Combine(TestDir, @"Day3.Input.txt");
+            var testFile = Path.Combine(TestHelper.TestDir, @"Day3.Input.txt");
 
             var minSteps = ManhattanHelper.GetMinStepsToIntersect(testFile);
 

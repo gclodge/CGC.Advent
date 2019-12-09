@@ -10,9 +10,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayNineTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         [TestMethod]
         public void Test_KnownResults()
         {
@@ -44,7 +41,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayNine_PartOne()
         {
-            var input = Path.Combine(TestDir, "Day9.Input.txt");
+            var input = Path.Combine(TestHelper.TestDir, "Day9.Input.txt");
             var intcode = new Core.Classes.Intcode(input);
             //< The input here is'1'
             intcode.AddInput(1);
@@ -59,7 +56,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayNine_PartTwo()
         {
-            var input = Path.Combine(TestDir, "Day9.Input.txt");
+            var input = Path.Combine(TestHelper.TestDir, "Day9.Input.txt");
             var intcode = new Core.Classes.Intcode(input);
             //< The input is now '2'
             intcode.AddInput(2);

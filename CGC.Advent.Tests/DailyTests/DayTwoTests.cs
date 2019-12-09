@@ -10,9 +10,6 @@ namespace CGC.Advent.Tests
     [TestClass]
     public class DayTwoTests
     {
-        //< I'm lazy right now, get at me
-        public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
-
         //< From: https://adventofcode.com/2019/day/2
         private static List<Tuple<long[], long[]>> _TestTups = new List<Tuple<long[], long[]>>()
         {
@@ -38,7 +35,7 @@ namespace CGC.Advent.Tests
         [TestMethod]
         public void Test_DayTwo_PartOne()
         {
-            var fn = Path.Combine(TestDir, "Day2.Input.txt");
+            var fn = Path.Combine(TestHelper.TestDir, "Day2.Input.txt");
 
             try
             {
@@ -60,7 +57,7 @@ namespace CGC.Advent.Tests
         public void Test_DayTwo_PartTwo()
         {
             //< This one has the un-altered input
-            var fn = Path.Combine(TestDir, "Day2.Input - Backup.txt");
+            var fn = Path.Combine(TestHelper.TestDir, "Day2.Input - Backup.txt");
 
             const int nounPos = 1;
             const int verbPos = 2;
