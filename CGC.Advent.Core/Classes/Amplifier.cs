@@ -8,7 +8,7 @@ namespace CGC.Advent.Core.Classes
 {
     public class Amplifier
     {
-        public int? Output => GetOutput();
+        public long? Output => GetOutput();
 
         public bool WaitingForInput => this.Intcode.WaitingForInput;
         public bool IsHalted => this.Intcode.IsFinished;
@@ -39,7 +39,7 @@ namespace CGC.Advent.Core.Classes
             this.Intcode.AddInput(input);
         }
 
-        private int? GetOutput()
+        private long? GetOutput()
         {
             if (Intcode.Outputs.Count == 0)
             {

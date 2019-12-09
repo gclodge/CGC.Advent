@@ -14,12 +14,12 @@ namespace CGC.Advent.Tests
         public static readonly string TestDir = @"D:\_dev_test\CGC.Advent";
 
         //< From: https://adventofcode.com/2019/day/2
-        private static List<Tuple<int[], int[]>> _TestTups = new List<Tuple<int[], int[]>>()
+        private static List<Tuple<long[], long[]>> _TestTups = new List<Tuple<long[], long[]>>()
         {
-            Tuple.Create(new int[] {1, 0, 0, 0, 99}, new int[] {2, 0, 0, 0, 99}),
-            Tuple.Create(new int[] {2, 3, 0, 3, 99}, new int[] {2, 3, 0, 6, 99}),
-            Tuple.Create(new int[] {2, 4, 4, 5, 99, 0}, new int[] {2, 4, 4, 5, 99, 9801}),
-            Tuple.Create(new int[] {1, 1, 1, 4, 99, 5, 6, 0, 99}, new int[] {30, 1, 1, 4, 2, 5, 6, 0, 99}),
+            Tuple.Create(new long[] {1, 0, 0, 0, 99}, new long[] {2, 0, 0, 0, 99}),
+            Tuple.Create(new long[] {2, 3, 0, 3, 99}, new long[] {2, 3, 0, 6, 99}),
+            Tuple.Create(new long[] {2, 4, 4, 5, 99, 0}, new long[] {2, 4, 4, 5, 99, 9801}),
+            Tuple.Create(new long[] {1, 1, 1, 4, 99, 5, 6, 0, 99}, new long[] {30, 1, 1, 4, 2, 5, 6, 0, 99}),
         };
 
 

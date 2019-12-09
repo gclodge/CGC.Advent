@@ -17,6 +17,7 @@ namespace CGC.Advent.Core.Classes
         JumpIfFalse,
         LessThan,
         Equals,
+        AdjustBase,
         Unknown
     }
 
@@ -24,21 +25,22 @@ namespace CGC.Advent.Core.Classes
     {
         Position,
         Immediate,
+        Relative,
         Unknown
     }
 
     public class OpcodeParameter
     {
-        public int? Value { get; private set; } = null;
+        public long? Value { get; private set; } = null;
         public ParameterMode Mode { get; private set; } = ParameterMode.Unknown;
 
-        public OpcodeParameter(int mode, int? val = null)
+        public OpcodeParameter(long mode, long? val = null)
         {
             this.Mode = ParseMode(mode);
             this.Value = val;
         }
 
-        private static ParameterMode ParseMode(int modeCode)
+        private static ParameterMode ParseMode(long modeCode)
         {
             switch (modeCode)
             {
@@ -46,6 +48,8 @@ namespace CGC.Advent.Core.Classes
                     return ParameterMode.Position;
                 case 1:
                     return ParameterMode.Immediate;
+                case 2:
+                    return ParameterMode.Relative;
                 default:
                     return ParameterMode.Unknown;
             }
@@ -54,7 +58,7 @@ namespace CGC.Advent.Core.Classes
 
     public class Opcode
     {
-        public int[] Source { get; private set; } = null;
+        public long[] Source { get; private set; } = null;
 
         public List<OpcodeParameter> Parameters { get; private set; } = null;
 
@@ -66,9 +70,9 @@ namespace CGC.Advent.Core.Classes
         public int Length { get; private set; } = 1;
         public int NumParams => this.Length - 1;
 
-        public int[] Instruction { get; private set; } = null;
+        public long[] Instruction { get; private set; } = null;
 
-        public Opcode(int[] intCode, int pos)
+        public Opcode(long[] intCode, int pos)
         {
             //< Get the 'instruction' array
             this.Instruction = GetInstructionArray(intCode[pos]);
@@ -78,7 +82,7 @@ namespace CGC.Advent.Core.Classes
             this.Length = GetLength(Type);
 
             //< Pull the Opcode from the current position of the Intcode stream
-            this.Source = new int[Length];
+            this.Source = new long[Length];
             Array.Copy(intCode, pos, this.Source, 0, Length);
 
             //< Generate the Parameters for this Opcode
@@ -87,12 +91,12 @@ namespace CGC.Advent.Core.Classes
 
         private void GetParameters()
         {
-            this.First  = new OpcodeParameter(this.Instruction[2], 1 > NumParams ? null : (int?)this.Source[1]);
-            this.Second = new OpcodeParameter(this.Instruction[1], 2 > NumParams ? null : (int?)this.Source[2]);
-            this.Third  = new OpcodeParameter(this.Instruction[0], 3 > NumParams ? null : (int?)this.Source[3]);
+            this.First  = new OpcodeParameter(this.Instruction[2], 1 > NumParams ? null : (long?)this.Source[1]);
+            this.Second = new OpcodeParameter(this.Instruction[1], 2 > NumParams ? null : (long?)this.Source[2]);
+            this.Third  = new OpcodeParameter(this.Instruction[0], 3 > NumParams ? null : (long?)this.Source[3]);
         }
 
-        private static OpcodeType GetType(int[] instruction)
+        private static OpcodeType GetType(long[] instruction)
         {
             //< Glue the last two (right-most) values together to get the type code
             var typeValue = $"{instruction[instruction.Length - 2]}{instruction[instruction.Length - 1]}";
@@ -116,6 +120,8 @@ namespace CGC.Advent.Core.Classes
                     return OpcodeType.LessThan;
                 case 8:
                     return OpcodeType.Equals;
+                case 9:
+                    return OpcodeType.AdjustBase;
                 case 99:
                     return OpcodeType.Halt;
                 default:
@@ -124,10 +130,10 @@ namespace CGC.Advent.Core.Classes
         }
 
         private const int MaxCheckVal = 5;
-        private static int[] GetInstructionArray(int value)
+        private static long[] GetInstructionArray(long value)
         {
             var valStr = value.ToString().PadLeft(MaxCheckVal, '0');
-            var arr = new int[MaxCheckVal];
+            var arr = new long[MaxCheckVal];
 
             for (int i = 0; i < valStr.Length; i++)
             {
@@ -151,6 +157,7 @@ namespace CGC.Advent.Core.Classes
                     return 3;
                 case OpcodeType.Input:
                 case OpcodeType.Output:
+                case OpcodeType.AdjustBase:
                     return 2;
                 default:
                     return 1;

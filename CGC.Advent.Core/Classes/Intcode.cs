@@ -9,22 +9,23 @@ namespace CGC.Advent.Core.Classes
 {
     public class Intcode
     {
-        public int[] Source { get; private set; } = null;
+        public long[] Source { get; private set; } = null;
         public int Length => Source.Length;
 
         private int _Index = 0;
         private int _CurrInput = 0;
-        public List<int> Inputs { get; private set; } = new List<int>();
+        public List<long> Inputs { get; private set; } = new List<long>();
 
         public List<Opcode> Opcodes { get; private set; } = new List<Opcode>();
-        public List<Tuple<Opcode, int>> Outputs { get; private set; } = new List<Tuple<Opcode, int>>();
+        public List<Tuple<Opcode, long>> Outputs { get; private set; } = new List<Tuple<Opcode, long>>();
 
+        private bool WaitOnOutputs = false;
         public bool WaitingForInput { get; private set; } = false;
         public bool IsFinished { get; private set; } = false;
 
-        private bool WaitOnOutputs = false;
+        public int RelativeBase { get; private set; } = 0;
 
-        public Intcode(int[] source, bool waitOnOuputs = false)
+        public Intcode(long[] source, bool waitOnOuputs = false)
         {
             this.Source = source;
             this.WaitOnOutputs = waitOnOuputs;
@@ -43,8 +44,17 @@ namespace CGC.Advent.Core.Classes
                 //< Input data is already a string, just parse it
                 data = source;
             }
-            this.Source = data.Split(',').Select(d => int.Parse(d)).ToArray();
+            this.Source = GetSource(data.Split(',').Select(d => long.Parse(d)).ToArray());
             this.WaitOnOutputs = waitOnOuputs;
+        }
+
+        const int Mult = 1024;
+        //< For Day9, we're told to include 'alot more memory than required'
+        private static long[] GetSource(long[] sourceArr)
+        {
+            var data = new long[Mult * sourceArr.Length];
+            Array.Copy(sourceArr, 0, data, 0, sourceArr.Length);
+            return data;
         }
 
         public void AddInput(int inp)
@@ -54,6 +64,11 @@ namespace CGC.Advent.Core.Classes
             {
                 this.WaitingForInput = false;
             }
+        }
+
+        public void SetRelativeBase(int relBase)
+        {
+            this.RelativeBase = relBase;
         }
 
         public void Process()
@@ -90,7 +105,7 @@ namespace CGC.Advent.Core.Classes
             }
         }
 
-        public int? GetValue(OpcodeParameter param)
+        public long? GetValue(OpcodeParameter param)
         {
             if (param.Value == null)
                 throw new Exception("Tried to get value of 'null' OpcodeParameter!");
@@ -101,12 +116,21 @@ namespace CGC.Advent.Core.Classes
                     return param.Value;
                 case ParameterMode.Position:
                     return GetValue((int)param.Value);
+                case ParameterMode.Relative:
+                    return GetRelativeValue(param);
                 default:
                     throw new Exception("Unknown Opcode ParameterMode encountered!");
             }
         }
 
-        public int GetValue(int idx)
+        private long? GetRelativeValue(OpcodeParameter param)
+        {
+            var idx = (int)param.Value + this.RelativeBase;
+            return GetValue(idx);
+            //return long.MaxValue;
+        }
+
+        public long GetValue(int idx)
         {
             //< Ensure it's within the Intcode bounds
             if (idx >= 0 && idx < this.Length)
@@ -119,7 +143,7 @@ namespace CGC.Advent.Core.Classes
             }
         }
 
-        public void SetValue(int idx, int value)
+        public void SetValue(int idx, long value)
         {
             //< Ensure it's within the Intcode bounds
             if (idx >= 0 && idx < this.Length)
@@ -150,6 +174,8 @@ namespace CGC.Advent.Core.Classes
                 case OpcodeType.LessThan:
                 case OpcodeType.Equals:
                     return HandleComparison(opcode);
+                case OpcodeType.AdjustBase:
+                    return HandleRelativeBase(opcode);
                 default:
                     throw new NotImplementedException(); //< Shouldn't happen?
             }
@@ -160,10 +186,10 @@ namespace CGC.Advent.Core.Classes
             //< Get the source values
             var A = this.GetValue(op.First);
             var B = this.GetValue(op.Second);
-            var C = op.Third.Value;
+            var C = op.Third.Value + (op.Third.Mode == ParameterMode.Relative ? this.RelativeBase : 0);
 
             //< Get the final values
-            int? val = -1;
+            long? val = -1;
             if (op.Type == OpcodeType.Add)
             {
                 val = A + B;
@@ -174,7 +200,7 @@ namespace CGC.Advent.Core.Classes
             }
 
             //< Set the value in the 'Source' array
-            this.SetValue((int)C, (int)val);
+            this.SetValue((int)C, (long)val);
             return op.Length;
         }
 
@@ -187,8 +213,11 @@ namespace CGC.Advent.Core.Classes
                 var input = this.Inputs[_CurrInput];
                 _CurrInput += 1;
 
+                //< Need to handle things being relative
+                int idx = (int)op.First.Value + (op.First.Mode == ParameterMode.Relative ? this.RelativeBase : 0);
+
                 //< Set that input value to the specified position
-                this.SetValue((int)op.First.Value, input);
+                this.SetValue(idx, input);
                 return op.Length;
             }
             else
@@ -207,7 +236,7 @@ namespace CGC.Advent.Core.Classes
             var A = this.GetValue(op.First);
 
             //< Get the actual output value, add to the 'outputs' listing
-            this.Outputs.Add(Tuple.Create(op, (int)A));
+            this.Outputs.Add(Tuple.Create(op, (long)A));
 
             //< Check if we're part of Amplifier in a feedback loop and thus gotta wait on Outputs
             if (this.WaitOnOutputs)
@@ -229,7 +258,7 @@ namespace CGC.Advent.Core.Classes
 
             if (zeroCondition)
             {
-                SetValue(_Index, (int)B);
+                //SetValue(_Index, (long)B);
                 _Index = (int)B;
                 return 0;
             }
@@ -242,12 +271,21 @@ namespace CGC.Advent.Core.Classes
             //< Get the source values
             var A = this.GetValue(op.First);
             var B = this.GetValue(op.Second);
-            var C = op.Third.Value;
+            var C = op.Third.Value + (op.Third.Mode == ParameterMode.Relative ? this.RelativeBase : 0);
 
             bool comparison = (op.Type == OpcodeType.LessThan) ? A < B : A == B;
-            int result = comparison ? 1 : 0;
+            long result = comparison ? 1 : 0;
             SetValue((int)C, result);
 
+            return op.Length;
+        }
+
+        private int HandleRelativeBase(Opcode op)
+        {
+            //< Get the source value
+            var A = this.GetValue(op.First);
+            //< Set the relative base to the value of the first parameter
+            this.RelativeBase += (int)A;
             return op.Length;
         }
     }

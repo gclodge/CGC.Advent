@@ -40,16 +40,15 @@ namespace CGC.Advent.Tests
             }
         }
 
-        //[TestMethod]
-        //[Ignore] //< Ignored since these tests fail while the actual PartTwo() worked..?
-        //public void Test_KnownFeedbackLoops()
-        //{
-        //    foreach (var testTup in FeedbackTups)
-        //    {
-        //        var res = AmplifierHelper.GetFeedbackThrustValue(testTup.Item2.ToList(), testTup.Item3);
-        //        Assert.IsTrue(res == testTup.Item1);
-        //    }
-        //}
+        [TestMethod]
+        public void Test_KnownFeedbackLoops()
+        {
+            foreach (var testTup in FeedbackTups)
+            {
+                var res = AmplifierHelper.GetFeedbackThrustValue(testTup.Item2.ToList(), testTup.Item3);
+                Assert.IsTrue(res == testTup.Item1);
+            }
+        }
 
         [TestMethod]
         public void Test_DaySeven_PartOne()
