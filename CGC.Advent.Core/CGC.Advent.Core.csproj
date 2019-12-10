@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Amplifier.cs" />
+    <Compile Include="Classes\AsteroidMap.cs" />
     <Compile Include="Classes\ElvenPassword.cs" />
     <Compile Include="Classes\Intcode.cs" />
     <Compile Include="Classes\ManhattanWire.cs" />

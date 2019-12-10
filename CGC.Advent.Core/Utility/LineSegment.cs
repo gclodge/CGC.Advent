@@ -73,5 +73,12 @@ namespace CGC.Advent.Core.Utility
 
             return (AB == AP + PB);
         }
+
+        //< Note this shit is signed, negative refers to 'to the left' within the coordinate system
+        public double GetSigned2DOffsetFromInfiniteLine(Vector<double> p)
+        {
+            double res = Unit[1] * (p[0] - Start[0]) - Unit[0] * (p[1] - Start[1]);
+            return res;
+        }
     }
 }

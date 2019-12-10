@@ -57,6 +57,7 @@
     <Compile Include="DailyTests\DayEightTests.cs" />
     <Compile Include="DailyTests\DayFiveTests.cs" />
     <Compile Include="DailyTests\DayTwoTests.cs" />
+    <Compile Include="DailyTests\DayTenTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DailyTests\DayThreeTests.cs" />
     <Compile Include="DailyTests\DayFourTests.cs" />
