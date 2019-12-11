@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace CGC.Advent.Core.Helpers
 {
-    public class AmpChain
-    {
-
-    }
-
     public class AmplifierHelper
     {
         const int NumAmplifiers = 5;

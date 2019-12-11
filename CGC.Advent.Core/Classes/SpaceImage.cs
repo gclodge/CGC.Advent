@@ -145,7 +145,7 @@ namespace CGC.Advent.Core.Classes
             return bmp;
         }
 
-        private static Color GetColor(int value)
+        public static Color GetColor(int value)
         {
             switch (value)
             {

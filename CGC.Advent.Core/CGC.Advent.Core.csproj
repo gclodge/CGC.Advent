@@ -51,6 +51,7 @@
     <Compile Include="Classes\Amplifier.cs" />
     <Compile Include="Classes\AsteroidMap.cs" />
     <Compile Include="Classes\ElvenPassword.cs" />
+    <Compile Include="Classes\HullPainter.cs" />
     <Compile Include="Classes\Intcode.cs" />
     <Compile Include="Classes\ManhattanWire.cs" />
     <Compile Include="Classes\Opcode.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Helpers\ManhattanHelper.cs" />
     <Compile Include="Helpers\OrbitHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\IntVector.cs" />
     <Compile Include="Utility\LineSegment.cs" />
   </ItemGroup>
   <ItemGroup />
