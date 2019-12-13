@@ -57,7 +57,7 @@ namespace CGC.Advent.Core.Classes
             return data;
         }
 
-        public void AddInput(int inp)
+        public void AddInput(long inp)
         {
             this.Inputs.Add(inp);
             if (this.WaitingForInput)
