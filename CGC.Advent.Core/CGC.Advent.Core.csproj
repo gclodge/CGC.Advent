@@ -51,6 +51,7 @@
     <Compile Include="Classes\Amplifier.cs" />
     <Compile Include="Classes\ArcadeGame.cs" />
     <Compile Include="Classes\AsteroidMap.cs" />
+    <Compile Include="Classes\Chemicals.cs" />
     <Compile Include="Classes\ElvenPassword.cs" />
     <Compile Include="Classes\HullPainter.cs" />
     <Compile Include="Classes\Intcode.cs" />
