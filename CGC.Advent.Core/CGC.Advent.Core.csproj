@@ -59,6 +59,7 @@
     <Compile Include="Classes\Moon.cs" />
     <Compile Include="Classes\Opcode.cs" />
     <Compile Include="Classes\Orbit.cs" />
+    <Compile Include="Classes\RepairDroid.cs" />
     <Compile Include="Classes\SpaceImage.cs" />
     <Compile Include="Helpers\AmplifierHelper.cs" />
     <Compile Include="Helpers\FuelCalculator.cs" />
