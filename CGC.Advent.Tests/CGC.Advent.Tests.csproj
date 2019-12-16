@@ -63,6 +63,7 @@
     <Compile Include="DailyTests\Day11Tests.cs" />
     <Compile Include="DailyTests\Day12Tests.cs" />
     <Compile Include="DailyTests\Day13Tests.cs" />
+    <Compile Include="DailyTests\Day16Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DailyTests\Day3Tests.cs" />
     <Compile Include="DailyTests\Day4Tests.cs" />
